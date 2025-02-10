@@ -20,6 +20,8 @@
       <div class="content">
         <div style="padding:10px 0px">ホームだよん</div>
         <div style="padding:10px 0px">ここには、まだ何もない(?)</div>
+        <div class="for-firefox" style="display: none; padding:10px 0px">あなたが使っているのは，Firefox，または，Firefoxベースのブラウザーでしょうか</div>
+        <div class="for-chromium" style="display: none; padding:10px 0px">あなたが使っているのは，Chrome，または，Chromiumベースのブラウザーでしょうか</div>
       </div>
     </div>
     <div class="page" data-name="About me">
@@ -87,7 +89,7 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
+    <script type="text/javascript" defer>
       try {
         let a = "あああああ";
         a += a + a;
@@ -123,6 +125,34 @@
       } catch(_) {
         // ignore errors
       }
+    </script>
+    <script type="text/javascript">
+      function isFirefoxBased() {
+        let b = false;
+        try {
+          null[{
+            __proto__: null,
+            toString() {
+              b = true;
+            }
+          }] -= 0;
+        } finally {
+          return b;
+        }
+      }
+      function isChromiumBased() {
+        const dt = new Date(0 / 0);
+        const result = dt.setDate({
+          valueOf() {
+            dt.setTime(0);
+            return 1;
+          }
+        });
+        return result === result;
+      }
+      [...isFirefoxBased() ? document.getElementsByClassName("for-firefox") : isChromiumBased() ? document.getElementsByClassName("for-chromium") : []].forEach(element => {
+        element.style.display = "";
+      });
     </script>
     <script type="module" src="./script.js"></script>
     <script defer src="./toomanyparams.js"></script>
