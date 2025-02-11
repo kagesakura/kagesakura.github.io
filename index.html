@@ -22,6 +22,7 @@
         <div style="padding:10px 0px">ここには、まだ何もない(?)</div>
         <div class="for-firefox" style="display: none; padding:10px 0px">あなたが使っているのは，Firefox，または，Firefoxベースのブラウザーでしょうか</div>
         <div class="for-chromium" style="display: none; padding:10px 0px">あなたが使っているのは，Chrome，または，Chromiumベースのブラウザーでしょうか</div>
+        <div class="for-safari" style="display: none; padding:10px 0px">あなたが使っているのは，Safari，または，Safariベースのブラウザーでしょうか</div>
       </div>
     </div>
     <div class="page" data-name="About me">
@@ -150,7 +151,16 @@
         });
         return result === result;
       }
-      [...isFirefoxBased() ? document.getElementsByClassName("for-firefox") : isChromiumBased() ? document.getElementsByClassName("for-chromium") : []].forEach(element => {
+      function isSafari() {
+        const values = [{
+          valueOf() {
+            values.length = 0;
+          }
+        }, 1];
+
+        return new Uint8Array(values)[1] !== 1;
+      }
+      [...isFirefoxBased() ? document.getElementsByClassName("for-firefox") : isChromiumBased() ? document.getElementsByClassName("for-chromium") : isSafari() ? document.getElementsByClassName("for-safari") : []].forEach(element => {
         element.style.display = "";
       });
     </script>
